@@ -1,24 +1,24 @@
-## Setup
+## About speedtest-ui
 
+speedtest-ui uses the [speedtest.net CLI](https://www.speedtest.net/apps/cli) in a laravel environment so check your internet speed every 3 minutes.
+results are logged every 3 minutes and can be visualized in three categories: [ 24hrs, Week, AllTime ].
 
 This tool uses the [speedtest.net CLI](https://www.speedtest.net/apps/cli).
 
-In order to use this tool you must first accept its terms of service and license by running the following command:
+![image](https://github.com/pirabyte/speedtest-ui/assets/24978665/2d19c1fd-15b8-42c0-b61e-89e8e981fbb8)
 
-```bash
-docker exec -it speedtest-app speedtest
-```
+For a minimal configuration you need to specify a database:
 
-Once that is done an automatic speedtest will be run and logged every 3 minutes.
+Supported database types can be checked in the official [laravel docs](https://laravel.com/docs/11.x/database#introduction).
 
-Example docker-compose.yml:
+## Example docker-compose.yml
 
 ```yaml
 version: '3.8'
 services:
     app:
         depends_on:
-            -   mariadb
+            - mariadb
         ports:
             - "8080:80"
         environment:
