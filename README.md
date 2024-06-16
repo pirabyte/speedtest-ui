@@ -29,7 +29,7 @@ services:
             - DB_USERNAME=database_user
             - DB_PASSWORD=database_password
     mariadb:
-        image: mariadb:10.5
+        image: mariadb:latest
         environment:
             - MYSQL_ROOT_PASSWORD=root_password
             - MYSQL_DATABASE=speedtest
