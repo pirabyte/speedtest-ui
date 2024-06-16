@@ -17,6 +17,7 @@ Supported database types can be checked in the official [laravel docs](https://l
 version: '3.8'
 services:
     app:
+        image:ghcr.io/pirabyte/speedtest-ui/speedtest-ui:latest
         depends_on:
             - mariadb
         ports:
