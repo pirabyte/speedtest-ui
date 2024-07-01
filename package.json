@@ -20,7 +20,7 @@
     },
     "dependencies": {
         "@tailwindcss/typography": "^0.5.10",
-        "apexcharts": "^3.49.1",
+        "apexcharts": "^3.49.2",
         "vue3-apexcharts": "^1.5.3"
     }
 }
