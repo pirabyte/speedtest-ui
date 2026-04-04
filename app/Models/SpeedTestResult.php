@@ -28,6 +28,15 @@ class SpeedTestResult extends Model
         'ping',
         'user_isp',
         'user_ip',
-        'packet_loss'
+        'packet_loss',
+    ];
+
+    protected $casts = [
+        'download_speed' => 'float',
+        'upload_speed' => 'float',
+        'ping' => 'float',
+        'packet_loss' => 'float',
+        'timestamp' => 'datetime',
+        'server_id' => 'integer',
     ];
 }

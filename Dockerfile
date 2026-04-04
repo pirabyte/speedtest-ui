@@ -14,13 +14,14 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libsqlite3-dev \
     zip \
     autoconf \
     g++ \
     make
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql gd mbstring exif pcntl bcmath xml
+RUN docker-php-ext-install pdo_mysql pdo_sqlite gd mbstring exif pcntl bcmath xml
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -43,13 +44,10 @@ COPY ./.setup/nginx/*.conf /etc/nginx/conf.d/
 COPY ./.setup/supervisor/*.conf /etc/supervisor/conf.d/
 
 # Copy existing application directory contents
-COPY . /var/www/html
-
-# Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www/html
 
 # Install all PHP dependencies
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
 RUN npm install
 
@@ -57,13 +55,17 @@ COPY .setup/cronjobs /etc/cron.d/laravel-scheduler
 RUN chmod 0644 /etc/cron.d/laravel-scheduler
 RUN crontab /etc/cron.d/laravel-scheduler
 
-# Expose port 80 and 443
+# Expose port 80
 EXPOSE 80
 
 RUN npm run build
 
 COPY ./.setup/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+# Health check using Laravel's built-in /up endpoint
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost/up || exit 1
 
 # Start PHP-FPM and Nginx
 CMD ["/entrypoint.sh"]

@@ -23,7 +23,7 @@ class SpeedTestParser
                 'user_ip' => $data->interface->externalIp,
                 'packet_loss' => $data->packetLoss
             ]);
-            Log::debug('Crated new speed test result: ' . $model->id);
+            Log::debug('Created new speed test result: ' . $model->id);
         }
         catch (\Exception $e)
         {

@@ -30,7 +30,8 @@ class RunSpeedTestJob implements ShouldQueue
         {
             $output = null;
             $resultCode = null;
-            exec("/usr/bin/speedtest --format=json --accept-license --accept-gdpr", $output, $resultCode);
+            $speedtestPath = env('SPEEDTEST_PATH', '/usr/bin/speedtest');
+            exec("{$speedtestPath} --format=json --accept-license --accept-gdpr", $output, $resultCode);
 
             if ($resultCode !== 0) {
                 Log::error("Failed to run speed test: Result: " . implode("\n", $output));
