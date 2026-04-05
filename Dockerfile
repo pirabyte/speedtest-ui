@@ -1,5 +1,5 @@
 # Use PHP with Nginx and PHP-FPM
-FROM php:8.2-fpm
+FROM php:8.4-fpm
 
 ENV SPEEDTEST_CLI_ACCEPT_GDPR=Y
 
