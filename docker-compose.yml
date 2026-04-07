@@ -7,12 +7,13 @@ services:
       - "8080:80"
     environment:
       - DB_CONNECTION=sqlite
+      - DB_DATABASE=/var/lib/speedtest-ui/database.sqlite
       - APP_TIMEZONE=UTC
       - QUEUE_CONNECTION=sync
       - APP_ENV=production
       - APP_DEBUG=false
     volumes:
-      - speedtest-data:/var/www/html/database
+      - speedtest-data:/var/lib/speedtest-ui
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/up"]

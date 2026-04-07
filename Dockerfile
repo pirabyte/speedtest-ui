@@ -2,6 +2,7 @@
 FROM php:8.4-fpm
 
 ENV SPEEDTEST_CLI_ACCEPT_GDPR=Y
+ENV LOG_CHANNEL=stderr
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -45,6 +46,7 @@ COPY ./.setup/supervisor/*.conf /etc/supervisor/conf.d/
 
 # Copy existing application directory contents
 COPY --chown=www-data:www-data . /var/www/html
+COPY --chown=www-data:www-data ./database/migrations /opt/laravel-migrations
 
 # Install all PHP dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev

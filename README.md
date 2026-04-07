@@ -10,7 +10,8 @@ Monitor your internet speed 24/7. Runs an [Ookla speedtest](https://www.speedtes
 docker run -d \
   --name speedtest \
   -p 8080:80 \
-  -v speedtest-data:/var/www/html/database \
+  -e DB_DATABASE=/var/lib/speedtest-ui/database.sqlite \
+  -v speedtest-data:/var/lib/speedtest-ui \
   --restart unless-stopped \
   ghcr.io/pirabyte/speedtest-ui:latest
 ```
@@ -23,7 +24,8 @@ To store the database in a local directory (e.g. for easy backup/export):
 docker run -d \
   --name speedtest \
   -p 8080:80 \
-  -v ./speedtest-data:/var/www/html/database \
+  -e DB_DATABASE=/var/lib/speedtest-ui/database.sqlite \
+  -v ./speedtest-data:/var/lib/speedtest-ui \
   --restart unless-stopped \
   ghcr.io/pirabyte/speedtest-ui:latest
 ```
@@ -38,8 +40,10 @@ services:
     image: ghcr.io/pirabyte/speedtest-ui:latest
     ports:
       - "8080:80"
+    environment:
+      - DB_DATABASE=/var/lib/speedtest-ui/database.sqlite
     volumes:
-      - speedtest-data:/var/www/html/database
+      - speedtest-data:/var/lib/speedtest-ui
     restart: unless-stopped
 
 volumes:

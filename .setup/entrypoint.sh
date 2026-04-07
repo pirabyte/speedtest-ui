@@ -25,6 +25,6 @@ fi
 chown -R www-data:www-data storage bootstrap/cache
 
 php artisan config:cache
-php artisan migrate --force
+php artisan migrate --path=/opt/laravel-migrations --realpath --force
 
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
